@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { storage } from "wxt/storage";
 import { useImmer } from "use-immer";
 
@@ -11,12 +11,8 @@ interface website {
 export default function () {
   const [websites, setWebsites] = useImmer<website[]>([]);
 
-  //const [newWebsite, setNewWebsite] = useState<website>());
-
   async function save(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    //setWebsiteList([...websiteList, newWebsite]);
-    //setNewWebsite('')
 
     await storage.setItem("local:websites", websites);
   }
@@ -32,12 +28,14 @@ export default function () {
   }, []);
 
   return (
-    <div>
-      <p>Websites:</p>
+    <div className="p-16">
+      <h1 className="text-3xl mb-4">Websites:</h1>
       <form onSubmit={save}>
+        { websites.length == 0 && <p >No websites blocked.</p>}
         {websites.map((website: website, index: number) => (
-          <div className="shadow p-4">
+          <div className="shadow-[0_5px_10px_-1px_rgba(0,0,0,0.2)] p-4 rounded-2xl">
             <input
+              className="text-xl font-bold w-full outline-none bg-transparent"
               value={website.name}
               onChange={(e) =>
                 setWebsites((draftWebsites) => {
@@ -49,6 +47,7 @@ export default function () {
               }
             />
             <input
+              className="w-full outline-none bg-transparent"
               value={website.url}
               onChange={(e) =>
                 setWebsites((draftWebsites) => {
@@ -60,6 +59,7 @@ export default function () {
               }
             />
             <input
+              className="w-full outline-none bg-transparent"
               value={website.description}
               onChange={(e) =>
                 setWebsites((draftWebsites) => {
@@ -74,6 +74,7 @@ export default function () {
         ))}
         <button
           type="button"
+          className="mt-4"
           onClick={() => {
             setWebsites([
               ...websites,

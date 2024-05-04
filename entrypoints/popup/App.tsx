@@ -11,7 +11,6 @@ const App = () => {
                     browser.runtime.openOptionsPage();
                 }
             }
-                className=""
             >
                 edit websites
             </button>
