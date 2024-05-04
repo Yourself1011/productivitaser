@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import "./Popup.css";
+import { useEffect, useState } from "react";
+import "./App.css";
 
 export default function () {
     useEffect(() => {
@@ -13,15 +13,6 @@ export default function () {
             <p>
                 Template: <code>react-ts</code>
             </p>
-
-            <button
-                onClick={async () => {
-                    console.log("among us");
-                    const device = await navigator.bluetooth.requestDevice();
-                }}
-            >
-                Connect
-            </button>
         </div>
     );
 }
