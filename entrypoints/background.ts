@@ -7,13 +7,24 @@ interface website {
 }
   
 export default defineBackground(() => {
-    browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+    console.log("Hello from the background! fortnite");
+
+    browser.runtime.onInstalled.addListener((details) => {
+        console.log("Extension installed:", details);
+    });
+
+    browser.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
         if (changeInfo.status == "complete") {
-            
-            // do your things
-            storage.getItem<string>("local:websites").then((result) => {
-                console.log(result);
-            });
+            console.log('joe')
+
+            const fetchedWebsites = (await storage.getItem(
+                "local:websites"
+              )) as website[];
+              if (fetchedWebsites) {
+                console.log(fetchedWebsites);
+              };
+        
+            console.log(tab.url)
         }
     });
 });
