@@ -1,59 +1,65 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { storage } from "wxt/storage";
 
 export default function () {
-    const [websiteList, setWebsiteList] = useState("");
+  const [websiteList, setWebsiteList] = useState<string[]>([]);
 
-    async function save() {
-        await storage.setItem("local:websites", websiteList);
-    }
+  const [newWebsite, setNewWebsite] = useState("");
 
-    useEffect(() => {
-        (async () => {
-            setWebsiteList((await storage.getItem("local:websites")) as string);
-        })();
-    }, []);
+  async function save() {
+    setWebsiteList([...websiteList, newWebsite]);
+    se
+        
+    await storage.setItem("local:websites", websiteList);
+  }
 
-    return (
-        <div>
-            <form onSubmit={save}>
-                <textarea
-                    onChange={(e) => {
-                        setWebsiteList(e.target.value);
-                    }}
-                    placeholder="Enter a website"
-                />
-                <button type="submit" onClick={save}>
-                    submit
-                </button>
-            </form>
-            <button
-                onClick={async () => {
-                    // console.log("among us");
-                    try {
-                        const device = await navigator.bluetooth.requestDevice({
-                            filters: [{ name: "HC-05" }],
-                            // acceptAllDevices: true,
-                        });
+  useEffect(() => {
+    (async () => {
+      //setWebsiteList((await storage.getItem("local:websites")) as SetStateAction<string[]>);
+    })();
+  }, []);
 
-                        const server = await device.gatt?.connect();
-                        console.log(device, server);
-                    } catch (e: Exception) {
-                        console.log(e.message);
-                    }
+  return (
+    <div>
+      <p>Websites:</p>
+      <form onSubmit={save}>
+        {websiteList.map(website => <span>{website}</span>)}
 
-                    // const port = await navigator.serial.requestPort();
-                    // console.log(port.getInfo());
+        {//<label htmlFor="addWebsite"></label>}
+        <input name="addWebsite" placeholder="Add website" value={newWebsite} onChange={e => setNewWebsite(e.target.value)} >
 
-                    // await port.open({ baudRate: 9600 });
-                    // const writer = port.writable?.getWriter();
+        </input>
+        <button type="submit" onClick={save}>
+          submit
+        </button>
+      </form>
+      <button
+        onClick={async () => {
+          // console.log("among us");
+          try {
+            const device = await navigator.bluetooth.requestDevice({
+              filters: [{ name: "HC-05" }],
+              // acceptAllDevices: true,
+            });
 
-                    // await writer?.write(new Uint8Array([1]));
-                    // writer?.releaseLock();
-                }}
-            >
-                Connect
-            </button>
-        </div>
-    );
+            const server = await device.gatt?.connect();
+            console.log(device, server);
+          } catch (e: any) {
+            console.log(e.message);
+          }
+
+          // const port = await navigator.serial.requestPort();
+          // console.log(port.getInfo());
+
+          // await port.open({ baudRate: 9600 });
+          // const writer = port.writable?.getWriter();
+
+          // await writer?.write(new Uint8Array([1]));
+          // writer?.releaseLock();
+        }}
+      >
+        Connect
+      </button>
+    </div>
+  );
 }

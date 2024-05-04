@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+import { browser } from 'wxt/browser';
 
-export default function () {
-    useEffect(() => {
-        console.log("Hello from the popup!");
-    }, []);
-
-    return (
-        <div>
-            <img src="/icon-with-shadow.svg" />
-            <h1>vite-plugin-web-extension</h1>
-            <p>
-                Template: <code>react-ts</code>
-            </p>
-        </div>
-    );
+const App = () => {
+  return (
+    <div className='text-center h-full flex flex-col items-center justify-center gap-4'>
+        <h1>Productaser</h1>
+        <button onClick={
+            () => {
+                browser.runtime.openOptionsPage();
+            }
+        }
+            className="bg-slate-500 hover:opacity-80 text-white py-2 px-4 rounded-full transition-opacity"
+        >
+            edit websites
+        </button>
+    </div>
+  )
 }
+
+export default App
