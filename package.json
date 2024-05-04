@@ -16,9 +16,11 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.19",
+    "immer": "^10.1.1",
     "postcss": "^8.4.38",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "use-immer": "^0.9.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.46",

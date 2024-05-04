@@ -1,6 +1,8 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;  
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 html,
 body {
@@ -9,12 +11,27 @@ body {
   padding: 0;
   margin: 0;
   /* dot background */
-  background: radial-gradient(circle, #000000 1px, transparent 1px) 0 0, radial-gradient(circle, #000000 1px, transparent 1px) 50px 50px;
-  background-color: #f9f9f9;
-  background-size: 10px 10px;
+  background: radial-gradient(circle, #ddd 1px, transparent 1px) 0 0,
+    radial-gradient(circle, #ddd 1px, transparent 1px) 60px 60px;
+  background-color: #fcfcfc;
+  background-size: 60px 60px;
   background-attachment: fixed;
-  font-family: 'Roboto', sans-serif;
   background-repeat: infinite;
+  font-family: "Inter", sans-serif;
+}
+
+button {
+  font-family: "Inter", sans-serif;
+  background-color: #64748b;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 100px;
+  transition: opacity 0.2s ease-in-out;
+  font-size: 14px;
+}
+
+button:hover {
+  opacity: 0.8;
 }
 
 #root {
