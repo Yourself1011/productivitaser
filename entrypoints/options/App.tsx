@@ -198,19 +198,23 @@ export default function () {
                             // }
 
                             const port = await navigator.serial.requestPort();
+                            // console.log(await navigator.serial.getPorts());
 
+                            await port.open({ baudRate: 9600 });
                             console.log(port);
 
-                            await storage.setItem("local:port", port);
-
-                            // await port.open({ baudRate: 9600 });
+                            // let carbage = await storage.getItem("local:port");
+                            // console.log({ carbage, port });
+                            // await storage.setItem<SerialPort>("local:port", port);
+                            // carbage = await storage.getItem("local:port");
+                            // console.log({ carbage, port });
 
                             // console.log("opened");
-                            // const writer = port.writable?.getWriter();
+                            const writer = port.writable?.getWriter();
 
-                            // await writer?.write(new Uint8Array([1]));
-                            // writer?.releaseLock();
-                            // console.log("written");
+                            await writer?.write(new Uint8Array([1]));
+                            writer?.releaseLock();
+                            console.log("written");
                         }}
                     >
                         <AiOutlineNodeIndex /> Connect

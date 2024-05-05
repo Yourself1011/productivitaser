@@ -20,6 +20,21 @@ export default function () {
             const a = await storage.getItem("local:recent");
             setRecent(a);
             console.log(a);
+
+            const port = (await navigator.serial.getPorts())[0];
+            console.log(await navigator.serial.getPorts());
+
+            if (port) {
+                port.open({ baudRate: 9600 });
+                console.log("opened");
+                const writer = port.writable?.getWriter();
+
+                await writer?.write(new Uint8Array([15]));
+                writer?.releaseLock();
+                console.log("written");
+                port.close();
+            }
+            console.log("found");
         })();
     }, []);
 

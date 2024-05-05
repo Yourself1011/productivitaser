@@ -26,22 +26,6 @@ export default defineBackground(() => {
                         };
                         await storage.setItem("local:websites", fetchedWebsites);
                         await storage.setItem("local:recent", fetchedWebsites[site].visits);
-
-                        const port = await storage.getItem<SerialPort>("local:port");
-                        console.log({ port });
-
-                        if (port) {
-                            await port.open({ baudRate: 9600 });
-
-                            console.log("opened");
-                            const writer = port.writable?.getWriter();
-
-                            await writer?.write(new Uint8Array([1]));
-                            writer?.releaseLock();
-                            console.log("written");
-                            port.close();
-                        }
-                        console.log("found");
                     }
                 }
             }
