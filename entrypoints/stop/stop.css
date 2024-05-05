@@ -1,0 +1,21 @@
+@keyframes flash {
+  0% {
+    background-color: white;
+  }
+  25% {
+    background-color: red;
+  }
+  50% {
+    background-color: white;
+  }
+  75% {
+    background-color: red;
+  }
+  100% {
+    background-color: white;
+  }
+}
+
+.stop {
+  animation: flash 0.5s;
+}
