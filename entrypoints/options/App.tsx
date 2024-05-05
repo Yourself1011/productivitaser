@@ -62,9 +62,7 @@ export default function () {
             className="py-2 px-2 ml-2 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base"
             value={searchString}
             onFocus={() => enable(false)}
-            onBlur={() => {
-              enable(true)
-            }}
+            onBlur={() => enable(true)}
             
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setSearchString(e.target.value);
@@ -108,9 +106,10 @@ export default function () {
                 }
               />
               <input
-                className="w-full underline border border-slate-300 p-1 rounded-md outline-none bg-transparent"
+                className="w-full border border-slate-100 p-1 rounded-md outline-none bg-transparent"
                 value={website.url}
                 id={`url-${index.toString()}`}
+                placeholder="https://example.com"
                 onChange={(e) =>{
                   setWebsites((draftWebsites) => {
                     draftWebsites[index] = {
@@ -154,7 +153,7 @@ export default function () {
                 ...websites,
                 {
                   name: "New website",
-                  url: "https://example.com",
+                  url: "",
                   description: "Description",
                 },
               ]);
