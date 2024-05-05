@@ -72,10 +72,8 @@ export default function () {
       </div>
 
       <form onSubmit={save}>
-        {(websites.length == 0 || !websites) && <p>No websites blocked.</p>}
         <div className="grid grid-cols-3 gap-8" ref={websitesAnimationElement}>
           {search(websites).map((website: website, index: number) => (
-            // shadow-[0_5px_10px_-1px_rgba(0,0,0,0.2)]
             <div className="shadow-lg border border-slate-100 bg-white p-4 rounded-2xl">
               <input
                 className="text-xl font-bold w-full outline-none bg-transparent"
@@ -147,7 +145,7 @@ export default function () {
           ))}
           <button
             type="button"
-            className='shadow-lg border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors '
+            className='shadow-lg h-[173px] border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors'
             onClick={() => {
               setWebsites([
                 ...websites,
