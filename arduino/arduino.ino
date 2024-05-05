@@ -9,8 +9,10 @@ void loop() {
 
   if (Serial.available() > 0) {
     digitalWrite(8, LOW);
-    delay(10);
-    Serial.println("Shock administered");
+    Serial.println("Shock started");
+    delay(1000);
+    digitalWrite(8, HIGH);
+    Serial.println("Shock ended");
     Serial.read();
   }
 }
