@@ -5,7 +5,6 @@ import Fuse from "fuse.js";
 import { LuSearch } from "react-icons/lu";
 
 interface website {
-
   name: string;
   url: string;
   description: string;
@@ -47,23 +46,27 @@ export default function () {
 
   return (
     <div className="p-16">
-      <h1 className="text-3xl mb-4">Websites</h1>
-      <div>
-        <input 
-          placeholder="Search..."
-          className="py-2 px-6 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400"
-          value={searchString}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            setSearchString(e.target.value)
-          }}
-        ></input>
-        <LuSearch className="relative -top-6 left-2" stroke="#d5d7db"/>
+      <div className='flex justify-between items-center'>
+        <h1 className="text-3xl mb-4">Blocked Websites</h1>
+        <div>
+          <input 
+            placeholder="Search..."
+            className="py-2 px-6 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base pl-8"
+            value={searchString}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setSearchString(e.target.value)
+            }}
+          ></input>
+          <LuSearch className="relative -top-8 left-2" size={20} stroke="#d5d7db"/>
+        </div>
       </div>
       
       <form onSubmit={save}>
-        { websites.length == 0 && <p>No websites blocked.</p>}
+        { (websites.length == 0 || !websites) && <p>No websites blocked.</p>}
+        <div className='grid grid-cols-3 gap-8'>
         {search(websites).map((website: website, index: number) => (
-          <div className="shadow-[0_5px_10px_-1px_rgba(0,0,0,0.2)] p-4 rounded-2xl">
+          // shadow-[0_5px_10px_-1px_rgba(0,0,0,0.2)]
+          <div className="shadow-lg border border-slate-200 p-4 rounded-2xl">
             <input
               className="text-xl font-bold w-full outline-none bg-transparent"
               value={website.name}
@@ -102,9 +105,10 @@ export default function () {
             />
           </div>
         ))}
+        </div>
         <button
           type="button"
-          className="mt-4"
+          className="mt-4 mr-2 border border-slate-800 bg-white text-slate-800"
           onClick={() => {
             setWebsites([
               ...websites,

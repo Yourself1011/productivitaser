@@ -16,7 +16,6 @@ export default defineBackground(() => {
 
     browser.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
         if (changeInfo.status == "complete") {
-            console.log('joe')
 
             const fetchedWebsites = (await storage.getItem(
                 "local:websites"
