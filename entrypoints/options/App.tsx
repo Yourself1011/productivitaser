@@ -11,6 +11,7 @@ interface website {
   name: string;
   url: string;
   description: string;
+  visits: number;
 }
 
 export default function () {
@@ -75,6 +76,7 @@ export default function () {
         <div className="grid grid-cols-3 gap-8" ref={websitesAnimationElement}>
           {search(websites).map((website: website, index: number) => (
             <div className="shadow-lg border border-slate-100 bg-white p-4 rounded-2xl">
+              {/*<img src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website.url}`} />*/}
               <input
                 className="text-xl font-bold w-full outline-none bg-transparent"
                 value={website.name}
@@ -103,21 +105,25 @@ export default function () {
                   }
                 }
               />
+              <p>Visited {website.visits} times</p>
               <input
                 className="w-full border border-slate-100 p-1 rounded-md outline-none bg-transparent"
                 value={website.url}
                 id={`url-${index.toString()}`}
                 placeholder="https://example.com"
                 onChange={(e) =>{
-                  setWebsites((draftWebsites) => {
-                    draftWebsites[index] = {
-                      ...draftWebsites[index],
-                      url: e.target.value,
-                    };
-                  })
+                  if (e.target.value !== '') {
+                    setWebsites((draftWebsites) => {
+                      draftWebsites[index] = {
+                        ...draftWebsites[index],
+                        url: e.target.value,
+                      };
+                    })
+                  }
                   setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)
                 }
                 }
+                required
               />
               <div className="flex items-center gap-2 mt-4">
                 <button 
@@ -153,6 +159,7 @@ export default function () {
                   name: "New website",
                   url: "",
                   description: "Description",
+                  visits: 0
                 },
               ]);
               setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)

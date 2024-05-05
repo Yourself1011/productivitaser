@@ -5,6 +5,7 @@ interface website {
     name: string;
     url: string;
     description: string;
+    visits: number;
 }
   
 export default defineBackground(() => {
@@ -22,8 +23,13 @@ export default defineBackground(() => {
               )) as website[];
               if (fetchedWebsites) {
                 for (let site in fetchedWebsites) {
-                    if (tab.url?.includes(fetchedWebsites[site].url)) {
+                    if (tab.url?.toString() !== "" && tab.url?.includes(fetchedWebsites[site].url)) {
                         browser.tabs.update(tabId, { url: '/stop.html' });
+                        fetchedWebsites[site] = {
+                            ...fetchedWebsites[site],
+                            visits: fetchedWebsites[site].visits + 1,
+                        };
+                        await storage.setItem("local:websites", fetchedWebsites);
                         console.log('found')
                     }
                 }
