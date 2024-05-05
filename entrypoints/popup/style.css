@@ -9,8 +9,8 @@ body {
   padding: 0;
   margin: 0;
   /* dot background */
-  background: radial-gradient(circle, #ddd 1px, transparent 1px) 0 0,
-    radial-gradient(circle, #ddd 1px, transparent 1px) 60px 60px;
+  background: radial-gradient(circle, #aaa 1px, transparent 1px) 0 0,
+    radial-gradient(circle, #aaa 1px, transparent 1px) 60px 60px;
   background-color: #fcfcfc;
   background-size: 60px 60px;
   background-attachment: fixed;
