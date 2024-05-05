@@ -15,6 +15,7 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.2",
     "autoprefixer": "^10.4.19",
     "fuse.js": "^7.0.0",
     "immer": "^10.1.1",

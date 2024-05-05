@@ -5,6 +5,9 @@ import Fuse from "fuse.js";
 import { LuPencil } from "react-icons/lu";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa";
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+
+
 
 interface website {
   name: string;
@@ -16,6 +19,8 @@ export default function () {
   const [websites, setWebsites] = useImmer<website[]>([]);
   const [searchString, setSearchString] = useState("");
   const [status, setStatus] = useState(<span className='text-slate-700'>• No Changes</span>);
+
+  const [websitesAnimationElement] = useAutoAnimate();
 
   function search(sites: website[]) {
     const options = {
@@ -67,7 +72,7 @@ export default function () {
 
       <form onSubmit={save}>
         {(websites.length == 0 || !websites) && <p>No websites blocked.</p>}
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-3 gap-8" ref={websitesAnimationElement}>
           {search(websites).map((website: website, index: number) => (
             // shadow-[0_5px_10px_-1px_rgba(0,0,0,0.2)]
             <div className="shadow-lg border border-slate-100 bg-white p-4 rounded-2xl">
