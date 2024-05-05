@@ -29,7 +29,7 @@ export default function () {
             <p className="text-3xl">❌</p>
             <h1 className="text-2xl">Stop right there, bub.</h1>
             <p>This isn't you.</p>
-            {recent && recent !== 0 && (
+            {recent && recent > 1 && (
                 <p>
                     You've already been here {recent} times. {recent >= 5 && <>Stop already!!</>}
                 </p>
