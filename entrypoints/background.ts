@@ -15,7 +15,7 @@ export default defineBackground(() => {
             if (fetchedWebsites) {
                 for (let site in fetchedWebsites) {
                     if (
-                        tab.url?.toString() !== "" &&
+                        fetchedWebsites[site].url !== "" &&
                         tab.url?.includes(fetchedWebsites[site].url) ||
                         tab.url?.match(fetchedWebsites[site].url)
                     ) {

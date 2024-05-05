@@ -25,14 +25,14 @@ export default function () {
             console.log(await navigator.serial.getPorts());
 
             if (port) {
-                port.open({ baudRate: 9600 });
+                await port.open({ baudRate: 9600 });
                 console.log("opened");
                 const writer = port.writable?.getWriter();
 
                 await writer?.write(new Uint8Array([15]));
                 writer?.releaseLock();
                 console.log("written");
-                port.close();
+                await port.close();
             }
             console.log("found");
         })();

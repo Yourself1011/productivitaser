@@ -6,7 +6,6 @@ void setup() {
 }
 
 void loop() {
-
   if (Serial.available() > 0) {
     digitalWrite(8, LOW);
     Serial.println("Shock started");

@@ -72,7 +72,7 @@ export default function () {
                 <div className="grid grid-cols-3 gap-8" ref={websitesAnimationElement}>
                     {search(websites).map((website: website, index: number) => (
                         <div className="shadow-lg border border-slate-100 bg-white p-4 rounded-2xl">
-                            {/*<img src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website.url}`} />*/}
+                            {website.url.length > 0 && <img src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website.url}`} onError={e => e.preventDefault()} className="w-4 h-4" />}
                             <input
                                 className="text-xl font-bold w-full outline-none bg-transparent"
                                 value={website.name}
@@ -111,14 +111,12 @@ export default function () {
                                 id={`url-${index.toString()}`}
                                 placeholder="Keyword, URL or regex"
                                 onChange={(e) => {
-                                    if (e.target.value !== "") {
-                                        setWebsites((draftWebsites) => {
-                                            draftWebsites[index] = {
-                                                ...draftWebsites[index],
-                                                url: e.target.value,
-                                            };
-                                        });
-                                    }
+                                    setWebsites((draftWebsites) => {
+                                        draftWebsites[index] = {
+                                            ...draftWebsites[index],
+                                            url: e.target.value,
+                                        };
+                                    });
                                     setStatus(
                                         <span className="text-yellow-500">• Unsaved Changes</span>
                                     );
