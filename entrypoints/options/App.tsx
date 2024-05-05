@@ -7,8 +7,6 @@ import { FaTrashCan } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa";
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
-
-
 interface website {
   name: string;
   url: string;
@@ -20,7 +18,7 @@ export default function () {
   const [searchString, setSearchString] = useState("");
   const [status, setStatus] = useState(<span className='text-slate-700'>• No Changes</span>);
 
-  const [websitesAnimationElement] = useAutoAnimate();
+  const [websitesAnimationElement, enable] = useAutoAnimate();
 
   function search(sites: website[]) {
     const options = {
@@ -63,6 +61,11 @@ export default function () {
             placeholder="Search..."
             className="py-2 px-2 ml-2 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base"
             value={searchString}
+            onFocus={() => enable(false)}
+            onBlur={() => {
+              enable(true)
+            }}
+            
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setSearchString(e.target.value);
             }}
@@ -145,7 +148,7 @@ export default function () {
           ))}
           <button
             type="button"
-            className='shadow-lg border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors'
+            className='shadow-lg border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors '
             onClick={() => {
               setWebsites([
                 ...websites,
