@@ -11,13 +11,13 @@ export default defineBackground(() => {
 
     browser.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
         if (changeInfo.status == "complete") {
-
-            const fetchedWebsites = (await storage.getItem(
-                "local:websites"
-              )) as website[];
-              if (fetchedWebsites) {
+            const fetchedWebsites = (await storage.getItem("local:websites")) as website[];
+            if (fetchedWebsites) {
                 for (let site in fetchedWebsites) {
-                    if (tab.url?.toString() !== "" && tab.url?.includes(fetchedWebsites[site].url)) {
+                    if (
+                        tab.url?.toString() !== "" &&
+                        tab.url?.includes(fetchedWebsites[site].url)
+                    ) {
                         browser.tabs.update(tabId, { url: `/stop.html` });
                         fetchedWebsites[site] = {
                             ...fetchedWebsites[site],
@@ -25,12 +25,26 @@ export default defineBackground(() => {
                         };
                         await storage.setItem("local:websites", fetchedWebsites);
                         await storage.setItem("local:recent", fetchedWebsites[site].visits);
-                        console.log('found')
+
+                        const port = await storage.getItem<SerialPort>("local:port");
+                        console.log(port);
+
+                        if (port) {
+                            await port.open({ baudRate: 9600 });
+
+                            console.log("opened");
+                            const writer = port.writable?.getWriter();
+
+                            await writer?.write(new Uint8Array([1]));
+                            writer?.releaseLock();
+                            console.log("written");
+                        }
+                        console.log("found");
                     }
                 }
-              };
-        
-            console.log(tab.url)
+            }
+
+            console.log(tab.url);
         }
     });
 });
