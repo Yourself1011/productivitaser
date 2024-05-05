@@ -2,7 +2,9 @@ import { useState, useEffect, ChangeEvent } from "react";
 import { storage } from "wxt/storage";
 import { useImmer } from "use-immer";
 import Fuse from "fuse.js";
-import { LuSearch } from "react-icons/lu";
+import { LuPencil } from "react-icons/lu";
+import { FaTrashCan } from "react-icons/fa6";
+import { FaCheck } from "react-icons/fa";
 
 interface website {
   name: string;
@@ -13,6 +15,7 @@ interface website {
 export default function () {
   const [websites, setWebsites] = useImmer<website[]>([]);
   const [searchString, setSearchString] = useState("");
+  const [status, setStatus] = useState(<span className='text-slate-700'>• No Changes</span>);
 
   function search(sites: website[]) {
     const options = {
@@ -30,8 +33,9 @@ export default function () {
 
   async function save(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
+    setStatus(<span className='text-yellow-700'>• Saving...</span>)
     await storage.setItem("local:websites", websites);
+    setStatus(<span className='text-green-700'>• All Changes Saved</span>)
   }
 
   useEffect(() => {
@@ -46,22 +50,18 @@ export default function () {
 
   return (
     <div className="p-16">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-4">
         <h1 className="text-3xl mb-4">Blocked Websites</h1>
         <div>
+          <span className='text-base'>{status}</span>
           <input
             placeholder="Search..."
-            className="py-2 px-6 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base pl-8"
+            className="py-2 px-2 ml-2 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base"
             value={searchString}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setSearchString(e.target.value);
             }}
           ></input>
-          <LuSearch
-            className="relative -top-8 left-2"
-            size={20}
-            stroke="#d5d7db"
-          />
         </div>
       </div>
 
@@ -74,57 +74,66 @@ export default function () {
               <input
                 className="text-xl font-bold w-full outline-none bg-transparent"
                 value={website.name}
-                onChange={(e) =>
+                onChange={(e) => {
                   setWebsites((draftWebsites) => {
                     draftWebsites[index] = {
                       ...draftWebsites[index],
                       name: e.target.value,
                     };
                   })
+                  setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)
+                  }
                 }
               />
               <input
                 className="w-full mb-4 outline-none bg-transparent"
                 value={website.description}
-                onChange={(e) =>
+                onChange={(e) =>{
                   setWebsites((draftWebsites) => {
                     draftWebsites[index] = {
                       ...draftWebsites[index],
                       description: e.target.value,
                     };
                   })
+                  setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)
+                  }
                 }
               />
               <input
                 className="w-full underline border border-slate-300 p-1 rounded-md outline-none bg-transparent"
                 value={website.url}
                 id={`url-${index.toString()}`}
-                onChange={(e) =>
+                onChange={(e) =>{
                   setWebsites((draftWebsites) => {
                     draftWebsites[index] = {
                       ...draftWebsites[index],
                       url: e.target.value,
                     };
                   })
+                  setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)
+                }
                 }
               />
               <div className="flex items-center gap-2 mt-4">
                 <button 
-                  className="w-1/2"
+                  className="w-1/2 flex items-center justify-center gap-2"
                   onClick={
                     () => {
                       document.getElementById(`url-${index.toString()}`)?.focus();
                     }
                   }
-                >Edit</button>
-                <button className="w-1/2 border border-slate-800 bg-white text-slate-800" onClick={
+                ><LuPencil /> Edit</button>
+                <button className="w-1/2 border border-slate-800 bg-white text-slate-800 flex items-center justify-center gap-2" onClick={
                   () => {
+                    console.log('jonald')
+                    setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)
+                    console.log('jonald')
                     setWebsites((draftWebsites) => {
                       draftWebsites.splice(index, 1);
                     });
                   }
                 }>
-                  Delete
+                  <FaTrashCan /> Delete
                 </button>
               </div>
             </div>
@@ -141,6 +150,7 @@ export default function () {
                   description: "Description",
                 },
               ]);
+              setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)
             }}
           >
             + Add
@@ -148,9 +158,9 @@ export default function () {
         </div>
         <button
           type="submit"
-          className="mt-4 ml-2 border border-slate-800 bg-white text-slate-800"
+          className="mt-4 ml-2 border border-slate-800 bg-white text-slate-800 flex items-center justify-center gap-2"
         >
-          Save
+          <FaCheck /> Save
         </button>
       </form>
 
