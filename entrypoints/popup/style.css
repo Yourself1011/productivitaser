@@ -20,16 +20,28 @@ body {
 
 button {
   font-family: "Inter", sans-serif;
-  background-color: #64748b;
-  color: #ffffff;
   padding: 6px 12px;
   border-radius: 100px;
-  transition: opacity 0.2s ease-in-out;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
   font-size: 14px;
+  background-color: #64748b;
+  color: #ffffff;
+  border: 1px solid #64748b;
+}
+button.contrast {
+  background-color: #fff;
+  color: #64748b;
+  border: 1px solid #64748b;
 }
 
 button:hover {
-  opacity: 0.8;
+  background-color: #fff;
+  color: #64748b;
+  border: 1px solid #64748b;
+}
+button.contrast:hover {
+  background-color: #64748b;
+  color: #fff;
 }
 
 #root {
