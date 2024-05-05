@@ -8,5 +8,8 @@ export default defineConfig({
     }),
     manifest: {
         permissions: ["storage"],
+        icons: {
+            48: '/icon/icon.png'
+        }
     },
 });

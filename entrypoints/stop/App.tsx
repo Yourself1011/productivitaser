@@ -39,7 +39,7 @@ export default function () {
     }, []);
 
     return (
-        <div className="flex items-center justify-center flex-col w-screen h-screen gap-8 text-lg stop">
+        <div className="flex items-center justify-center flex-col w-screen h-screen gap-4 text-lg stop">
             <img src={movables[Math.floor(Math.random() * movables.length)]}></img>
             <p className="text-3xl">❌</p>
             <h1 className="text-2xl">Stop right there, bub.</h1>
