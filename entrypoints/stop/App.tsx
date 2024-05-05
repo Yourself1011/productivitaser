@@ -1,4 +1,7 @@
 import './stop.css'
+import { useEffect, useState } from "react";
+import { website } from '../types';
+import { storage } from 'wxt/storage';
 
 const movables = [
   'https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_lossy/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7fbcc007-a943-4bd9-882a-62c0e55a2c7c_498x253.gif',
@@ -9,16 +12,26 @@ const movables = [
   'https://substackcdn.com/image/fetch/w_1456,c_limit,f_webp,q_auto:good,fl_lossy/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9743136e-1844-4dfd-a7d2-265120a61754_498x373.gif'
 ] as string[]
 
-const App = () => {
+export default function () {
 
+  const [recent, setRecent] = useState<any>();
+
+  useEffect(() => {
+    (async () => {
+      const a = (await storage.getItem("local:recent"));
+      setRecent(a);
+      console.log(a)
+    })();
+  }, []);
+  
   return (
     <div className="flex items-center justify-center flex-col w-screen h-screen gap-8 text-lg stop">
       <img src={movables[Math.floor(Math.random() * movables.length)]}></img>
       <p className='text-3xl'>❌</p>
       <h1 className='text-2xl'>Stop right there, bub.</h1>
       <p>This isn't you.</p>
-      <p>You've already been here x times.</p>
-      <p>So hop off, because it isn't too late.</p>
+      <p>You've already been here {recent} times. {(recent >= 5) && <>Stop already!!</>}</p>
+      <p>Hop off, because it isn't too late.</p>
       <button onClick={
         () => {
           close();
@@ -27,5 +40,3 @@ const App = () => {
     </div>
   )
 }
-
-export default App

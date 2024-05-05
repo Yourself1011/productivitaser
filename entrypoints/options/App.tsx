@@ -5,14 +5,8 @@ import Fuse from "fuse.js";
 import { LuPencil } from "react-icons/lu";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
-
-interface website {
-    name: string;
-    url: string;
-    description: string;
-    visits: number;
-}
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { website } from "../types";
 
 export default function () {
     const [websites, setWebsites] = useImmer<website[]>([]);
@@ -50,149 +44,144 @@ export default function () {
         })();
     }, []);
 
-    return (
-        <div className="p-16">
-            <div className="flex justify-between items-center mb-4">
-                <h1 className="text-3xl mb-4">Blocked Websites</h1>
-                <div>
-                    <span className="text-base">{status}</span>
-                    <input
-                        placeholder="Search..."
-                        className="py-2 px-2 ml-2 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base"
-                        value={searchString}
-                        onFocus={() => enable(false)}
-                        onBlur={() => enable(true)}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                            setSearchString(e.target.value);
-                        }}
-                    ></input>
-                </div>
-            </div>
-            <form onSubmit={save}>
-                <div className="grid grid-cols-3 gap-8" ref={websitesAnimationElement}>
-                    {search(websites).map((website: website, index: number) => (
-                        <div className="shadow-lg border border-slate-100 bg-white p-4 rounded-2xl">
-                            {/*<img src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website.url}`} />*/}
-                            <input
-                                className="text-xl font-bold w-full outline-none bg-transparent"
-                                value={website.name}
-                                onChange={(e) => {
-                                    setWebsites((draftWebsites) => {
-                                        draftWebsites[index] = {
-                                            ...draftWebsites[index],
-                                            name: e.target.value,
-                                        };
-                                    });
-                                    setStatus(
-                                        <span className="text-yellow-500">• Unsaved Changes</span>
-                                    );
-                                }}
-                            />
-                            <input
-                                className="w-full mb-4 outline-none bg-transparent"
-                                value={website.description}
-                                onChange={(e) => {
-                                    setWebsites((draftWebsites) => {
-                                        draftWebsites[index] = {
-                                            ...draftWebsites[index],
-                                            description: e.target.value,
-                                        };
-                                    });
-                                    setStatus(
-                                        <span className="text-yellow-500">• Unsaved Changes</span>
-                                    );
-                                }}
-                            />
-                            <p>Visited {website.visits} times</p>
-                            <input
-                                className="w-full border border-slate-100 p-1 rounded-md outline-none bg-transparent"
-                                value={website.url}
-                                id={`url-${index.toString()}`}
-                                placeholder="https://example.com"
-                                onChange={(e) => {
-                                    if (e.target.value !== "") {
-                                        setWebsites((draftWebsites) => {
-                                            draftWebsites[index] = {
-                                                ...draftWebsites[index],
-                                                url: e.target.value,
-                                            };
-                                        });
-                                    }
-                                    setStatus(
-                                        <span className="text-yellow-500">• Unsaved Changes</span>
-                                    );
-                                }}
-                                required
-                            />
-                            <div className="flex items-center gap-2 mt-4">
-                                <button
-                                    className="w-1/2 flex items-center justify-center gap-2"
-                                    onClick={() => {
-                                        document.getElementById(`url-${index.toString()}`)?.focus();
-                                    }}
-                                >
-                                    <LuPencil /> Edit
-                                </button>
-                                <button
-                                    className="w-1/2 border border-slate-800 bg-white text-slate-800 flex items-center justify-center gap-2"
-                                    onClick={() => {
-                                        console.log("jonald");
-                                        setStatus(
-                                            <span className="text-yellow-500">
-                                                • Unsaved Changes
-                                            </span>
-                                        );
-                                        console.log("jonald");
-                                        setWebsites((draftWebsites) => {
-                                            draftWebsites.splice(index, 1);
-                                        });
-                                    }}
-                                >
-                                    <FaTrashCan /> Delete
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                    <button
-                        type="button"
-                        className="shadow-lg h-[173px] border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors"
-                        onClick={() => {
-                            setWebsites([
-                                ...websites,
-                                {
-                                    name: "New website",
-                                    url: "",
-                                    description: "Description",
-                                    visits: 0,
-                                },
-                            ]);
-                            setStatus(<span className="text-yellow-500">• Unsaved Changes</span>);
-                        }}
-                    >
-                        + Add
-                    </button>
-                </div>
-                <button
-                    type="submit"
-                    className="mt-4 ml-2 border border-slate-800 bg-white text-slate-800 flex items-center justify-center gap-2"
-                >
-                    <FaCheck /> Save
-                </button>
-            </form>
-            <button
-                onClick={async () => {
-                    // console.log("among us");
-                    // try {
-                    //     const device = await navigator.bluetooth.requestDevice({
-                    //         filters: [{ name: "HC-05" }],
-                    //         // acceptAllDevices: true,
-                    //     });
+  return (
+    <div className="p-16">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl mb-4">Blocked Websites</h1>
+        <div>
+          <span className='text-base'>{status}</span>
+          <input
+            placeholder="Search..."
+            className="py-2 px-2 ml-2 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base"
+            value={searchString}
+            onFocus={() => enable(false)}
+            onBlur={() => enable(true)}
+            
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setSearchString(e.target.value);
+            }}
+          ></input>
+        </div>
+      </div>
 
-                    //     const server = await device.gatt?.connect();
-                    //     console.log(device, server);
-                    // } catch (e: any) {
-                    //     console.log(e.message);
-                    // }
+      <form onSubmit={save}>
+        <div className="grid grid-cols-3 gap-8" ref={websitesAnimationElement}>
+          {search(websites).map((website: website, index: number) => (
+            <div className="shadow-lg border border-slate-100 bg-white p-4 rounded-2xl">
+              {/*<img src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website.url}`} />*/}
+              <input
+                className="text-xl font-bold w-full outline-none bg-transparent"
+                value={website.name}
+                onChange={(e) => {
+                  setWebsites((draftWebsites) => {
+                    draftWebsites[index] = {
+                      ...draftWebsites[index],
+                      name: e.target.value,
+                    };
+                  })
+                  setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)
+                  }
+                }
+              />
+              <input
+                className="w-full mb-4 outline-none bg-transparent"
+                value={website.description}
+                onChange={(e) =>{
+                  setWebsites((draftWebsites) => {
+                    draftWebsites[index] = {
+                      ...draftWebsites[index],
+                      description: e.target.value,
+                    };
+                  })
+                  setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)
+                  }
+                }
+              />
+              <p>Visited {website.visits} times</p>
+              <input
+                className="w-full border border-slate-100 p-1 rounded-md outline-none bg-transparent"
+                value={website.url}
+                id={`url-${index.toString()}`}
+                placeholder="https://example.com"
+                onChange={(e) =>{
+                  if (e.target.value !== '') {
+                    setWebsites((draftWebsites) => {
+                      draftWebsites[index] = {
+                        ...draftWebsites[index],
+                        url: e.target.value,
+                      };
+                    })
+                  }
+                  setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)
+                }
+                }
+                required
+              />
+              <div className="flex items-center gap-2 mt-4">
+                <button 
+                  className="w-1/2 flex items-center justify-center gap-2"
+                  onClick={
+                    () => {
+                      document.getElementById(`url-${index.toString()}`)?.focus();
+                    }
+                  }
+                ><LuPencil /> Edit</button>
+                <button className="w-1/2 border border-slate-800 bg-white text-slate-800 flex items-center justify-center gap-2" onClick={
+                  () => {
+                    console.log('jonald')
+                    setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)
+                    console.log('jonald')
+                    setWebsites((draftWebsites) => {
+                      draftWebsites.splice(index, 1);
+                    });
+                  }
+                }>
+                  <FaTrashCan /> Delete
+                </button>
+              </div>
+            </div>
+          ))}
+          <button
+            type="button"
+            className='shadow-lg h-[173px] border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors'
+            onClick={() => {
+              setWebsites([
+                ...websites,
+                {
+                  name: "New website",
+                  url: "",
+                  description: "Description",
+                  visits: 0
+                },
+              ]);
+              setStatus(<span className='text-yellow-500'>• Unsaved Changes</span>)
+            }}
+          >
+            + Add
+          </button>
+        </div>
+        <button
+          type="submit"
+          className="mt-4 ml-2 border border-slate-800 bg-white text-slate-800 flex items-center justify-center gap-2"
+        >
+          <FaCheck /> Save
+        </button>
+      </form>
+
+      <button
+        onClick={async () => {
+          // console.log("among us");
+          try {
+            const device = await navigator.bluetooth.requestDevice({
+              filters: [{ name: "HC-05" }],
+              // acceptAllDevices: true,
+            });
+
+                        const server = await device.gatt?.connect();
+                        console.log(device, server);
+                    } catch (e: any) {
+                        console.log(e.message);
+                    }
 
                     const port = await navigator.serial.requestPort();
 

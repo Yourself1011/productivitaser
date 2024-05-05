@@ -1,13 +1,7 @@
 import { storage } from "wxt/storage";
 import { browser } from "wxt/browser";
+import { website } from "./types";
 
-interface website {
-    name: string;
-    url: string;
-    description: string;
-    visits: number;
-}
-  
 export default defineBackground(() => {
     console.log("Hello from the background! fortnite");
 
@@ -24,12 +18,13 @@ export default defineBackground(() => {
               if (fetchedWebsites) {
                 for (let site in fetchedWebsites) {
                     if (tab.url?.toString() !== "" && tab.url?.includes(fetchedWebsites[site].url)) {
-                        browser.tabs.update(tabId, { url: '/stop.html' });
+                        browser.tabs.update(tabId, { url: `/stop.html` });
                         fetchedWebsites[site] = {
                             ...fetchedWebsites[site],
                             visits: fetchedWebsites[site].visits + 1,
                         };
                         await storage.setItem("local:websites", fetchedWebsites);
+                        await storage.setItem("local:recent", fetchedWebsites[site].visits);
                         console.log('found')
                     }
                 }
