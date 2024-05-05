@@ -1,4 +1,5 @@
 import { storage } from "wxt/storage";
+import { browser } from "wxt/browser";
 
 interface website {
     name: string;
@@ -21,7 +22,12 @@ export default defineBackground(() => {
                 "local:websites"
               )) as website[];
               if (fetchedWebsites) {
-                console.log(fetchedWebsites);
+                for (let site in fetchedWebsites) {
+                    if (tab.url?.includes(fetchedWebsites[site].url)) {
+                        browser.tabs.update(tabId, { url: '/stop.html' });
+                        console.log('found')
+                    }
+                }
               };
         
             console.log(tab.url)
