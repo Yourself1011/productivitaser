@@ -76,6 +76,7 @@ export default function () {
                             <input
                                 className="text-xl font-bold w-full outline-none bg-transparent"
                                 value={website.name}
+                                key={`input-${index.toString()}`}
                                 onChange={(e) => {
                                     setWebsites((draftWebsites) => {
                                         draftWebsites[index] = {
@@ -108,7 +109,7 @@ export default function () {
                                 className="w-full border border-slate-100 p-1 rounded-md outline-none bg-transparent"
                                 value={website.url}
                                 id={`url-${index.toString()}`}
-                                placeholder="https://example.com"
+                                placeholder="Keyword, URL or regex"
                                 onChange={(e) => {
                                     if (e.target.value !== "") {
                                         setWebsites((draftWebsites) => {
@@ -155,7 +156,7 @@ export default function () {
                     ))}
                     <button
                         type="button"
-                        className="shadow-lg h-[173px] border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors"
+                        className="shadow-lg h-[193px] border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors"
                         onClick={() => {
                             setWebsites([
                                 ...websites,
