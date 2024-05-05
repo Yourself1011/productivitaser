@@ -27,7 +27,7 @@ export default defineBackground(() => {
                         await storage.setItem("local:recent", fetchedWebsites[site].visits);
 
                         const port = await storage.getItem<SerialPort>("local:port");
-                        console.log(port);
+                        console.log({ port });
 
                         if (port) {
                             await port.open({ baudRate: 9600 });
@@ -38,6 +38,7 @@ export default defineBackground(() => {
                             await writer?.write(new Uint8Array([1]));
                             writer?.releaseLock();
                             console.log("written");
+                            port.close();
                         }
                         console.log("found");
                     }
