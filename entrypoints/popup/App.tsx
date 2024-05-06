@@ -1,4 +1,5 @@
 import { browser } from "wxt/browser";
+import { FaGithub } from "react-icons/fa";
 
 const App = () => {
   return (
@@ -15,6 +16,10 @@ const App = () => {
         >
           edit blocked sites
         </button>
+      </div>
+      <div className='absolute bottom-0 border-t border-t-neutral-200 bg-white p-2 left-0 w-full flex justify-between '>
+        <p className='flex gap-2 items-center'>Copyright &#169; 2024</p>
+        <a className='flex gap-2 items-center underline' href='https://github.com/Yourself1011/productivity-taser' target='_blank'><FaGithub /> GitHub</a>
       </div>
     </div>
   );

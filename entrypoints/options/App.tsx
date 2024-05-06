@@ -9,6 +9,8 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { website } from "../types";
 import { AiOutlineNodeIndex } from "react-icons/ai";
 import { IoMdSearch } from "react-icons/io";
+import { FaGithub } from "react-icons/fa";
+import { SiD, SiDevpost } from "react-icons/si";
 
 export default function () {
   const [websites, setWebsites] = useImmer<website[]>([]);
@@ -212,6 +214,14 @@ export default function () {
           </button>
         </div>
       </form>
+
+      <div className='absolute bottom-0 border-t border-t-neutral-200 bg-white left-0 w-full flex justify-between p-6 text-base'>
+        <p className='flex gap-2 items-center'>Copyright &#169; 2024</p>
+        <div className='flex items-center gap-8'>
+            <a className='flex gap-2 items-center underline' href='https://github.com/Yourself1011/productivity-taser' target='_blank'><FaGithub /> GitHub</a>
+            <a className='flex gap-2 items-center underline' href='https://devpost.com/software/lostazer' target='_blank'><SiDevpost /> Devpost</a>
+        </div>
+      </div>
     </div>
   );
 }
