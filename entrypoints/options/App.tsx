@@ -72,23 +72,25 @@ export default function () {
                 <div className="grid grid-cols-3 gap-8" ref={websitesAnimationElement}>
                     {search(websites).map((website: website, index: number) => (
                         <div className="shadow-lg border border-slate-100 bg-white p-4 rounded-2xl">
-                            {website.url.length > 0 && <img src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website.url}`} onError={e => e.preventDefault()} className="w-4 h-4" />}
-                            <input
-                                className="text-xl font-bold w-full outline-none bg-transparent"
-                                value={website.name}
-                                key={`input-${index.toString()}`}
-                                onChange={(e) => {
-                                    setWebsites((draftWebsites) => {
-                                        draftWebsites[index] = {
-                                            ...draftWebsites[index],
-                                            name: e.target.value,
-                                        };
-                                    });
-                                    setStatus(
-                                        <span className="text-yellow-500">• Unsaved Changes</span>
-                                    );
-                                }}
-                            />
+                            <div className='flex items-center justify-between gap-2'>
+                                <input
+                                    className="text-xl font-bold w-full outline-none bg-transparent"
+                                    value={website.name}
+                                    key={`input-${index.toString()}`}
+                                    onChange={(e) => {
+                                        setWebsites((draftWebsites) => {
+                                            draftWebsites[index] = {
+                                                ...draftWebsites[index],
+                                                name: e.target.value,
+                                            };
+                                        });
+                                        setStatus(
+                                            <span className="text-yellow-500">• Unsaved Changes</span>
+                                        );
+                                    }}
+                                />
+                                {website.url.length > 0 && <img src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website.url}`} onError={e => e.preventDefault()} className="w-4 h-4" />}
+                            </div>
                             <input
                                 className="w-full mb-4 outline-none bg-transparent"
                                 value={website.description}
@@ -104,7 +106,6 @@ export default function () {
                                     );
                                 }}
                             />
-                            <p>Visited {website.visits} times</p>
                             <input
                                 className="w-full border border-slate-100 p-1 rounded-md outline-none bg-transparent"
                                 value={website.url}
@@ -123,6 +124,7 @@ export default function () {
                                 }}
                                 required
                             />
+                            <p>Visited {website.visits} times</p>
                             <div className="flex items-center gap-2 mt-4">
                                 <button
                                     className="w-1/2 flex items-center justify-center gap-2"
@@ -135,6 +137,7 @@ export default function () {
                                 <button
                                     className="w-1/2 contrast flex items-center justify-center gap-2"
                                     onClick={() => {
+                                        enable(false)
                                         console.log("jonald");
                                         setStatus(
                                             <span className="text-yellow-500">
@@ -156,6 +159,7 @@ export default function () {
                         type="button"
                         className="shadow-lg h-[193px] border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors"
                         onClick={() => {
+                            enable(true);
                             setWebsites([
                                 ...websites,
                                 {

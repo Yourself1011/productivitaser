@@ -7,7 +7,7 @@ export default defineConfig({
         plugins: [react()],
     }),
     manifest: {
-        permissions: ["storage"],
+        permissions: ["storage", "tabs"],
         icons: {
             48: '/icon/icon.png'
         }
