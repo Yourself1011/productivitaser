@@ -18,6 +18,7 @@ export default function () {
   const [status, setStatus] = useState(
     <span className="text-slate-700">• No Changes</span>,
   );
+  const [serial, setSerial] = useState<boolean>(false);
 
   const [websitesAnimationElement, enable] = useAutoAnimate();
 
@@ -60,7 +61,7 @@ export default function () {
           <span className="text-base">{status}</span>
           <input
             placeholder="Search..."
-            className="py-2 px-2 ml-2 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base"
+            className="py-2 px-2 ml-4 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base"
             value={searchString}
             onFocus={() => enable(false)}
             onBlur={() => enable(true)}
@@ -197,23 +198,34 @@ export default function () {
           >
             <FaCheck /> Save
           </button>
+        </div>
+      </form>
+
+      <div>
+        <h1 className="mt-8 text-2xl">Serial</h1>
+        <p className="text-base">
+          {serial ? (
+            <>Connected!</>
+          ) : (<>No serial connected, yet.</>)}
           <button
-            className="flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2 mt-4"
             onClick={async () => {
               const port = await navigator.serial.requestPort();
 
               await port.open({ baudRate: 9600 });
-
+              console.log(JSON.stringify(port, function(key, value) { return value === undefined ? "undefined" : value }))
+              setSerial(true);
+              
               const writer = port.writable?.getWriter();
-
+              
               await writer?.write(new Uint8Array([1]));
               writer?.releaseLock();
             }}
           >
             <AiOutlineNodeIndex /> Connect
           </button>
-        </div>
-      </form>
+        </p>
+      </div>
 
       <div className='absolute bottom-0 border-t border-t-neutral-200 bg-white left-0 w-full flex justify-between p-6 text-base'>
         <p className='flex gap-2 items-center'>Copyright &#169; 2024</p>
