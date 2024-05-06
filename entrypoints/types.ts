@@ -5,4 +5,4 @@ export interface website {
   visits: number;
 }
 
-export default defineUnlistedScript
+export default defineUnlistedScript;

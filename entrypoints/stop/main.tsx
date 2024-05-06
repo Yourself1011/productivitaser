@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import "../popup/style.css";
 
 ReactDOM.createRoot(document.getElementById("stop")!).render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
 );
