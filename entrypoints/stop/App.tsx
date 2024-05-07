@@ -49,6 +49,9 @@ export default function () {
           {recent >= 5 && <>Stop already!!</>}
         </p>
       )}
+      <p>
+        You almost just wasted {Math.floor(Math.random() * 59)} minutes.
+      </p>
       <p>Hop off, because it isn't too late.</p>
       <button
         onClick={() => {
