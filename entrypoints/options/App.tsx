@@ -10,7 +10,7 @@ import { website } from "../types";
 import { AiOutlineNodeIndex } from "react-icons/ai";
 import { IoMdSearch } from "react-icons/io";
 import { FaGithub } from "react-icons/fa";
-import { SiD, SiDevpost } from "react-icons/si";
+import { SiDevpost } from "react-icons/si";
 
 export default function () {
   const [websites, setWebsites] = useImmer<website[]>([]);
@@ -208,7 +208,7 @@ export default function () {
             <>Connected!</>
           ) : (<>No serial connected, yet.</>)}
           <button
-            className="flex items-center justify-center gap-2 mt-4"
+            className="flex bg-[#64748b] opacity-100 items-center justify-center gap-2 mt-4"
             onClick={async () => {
               const port = await navigator.serial.requestPort();
 

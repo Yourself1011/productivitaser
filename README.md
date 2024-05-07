@@ -1,4 +1,4 @@
-# Productivitaser
+# Productivitazer
 
 Built by Gary Zhang, Li Feng Yin, Daniel Zhang, Jeffrey Zang in 30 hours at GDSCHacks 2024.
 
