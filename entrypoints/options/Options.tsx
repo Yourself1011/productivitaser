@@ -117,7 +117,7 @@ const Options = () => {
           ref={websitesAnimationElement}
         >
           {search(websites).map((website: website, index: number) => (
-            <div className="shadow-lg !h-full border border-slate-100 bg-white p-4 rounded-2xl" key={`options-website-${index}`}>
+            <div className="shadow-lg !h-full border border-slate-100 bg-white p-4 rounded-2xl relative" key={`options-website-${index}`}>
               <div className="flex items-center justify-between gap-2">
                 <input
                   className="text-xl font-bold w-full outline-none bg-transparent"
@@ -126,23 +126,22 @@ const Options = () => {
                   onChange={(e) => updateDraft(e, index, "name")}
                   name={`name-${index.toString()}`}
                 />
-                {/* {website.url.length > 0 && (
+                {website.url.length > 0 && (
                   <img
                     src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website.url}`}
-                    onError={() => setHasError(true)} // Set an 'hasError' state
-                    className={hasError ? 'hidden' : 'w-4 h-4'} // Hide if error
+                    className={'w-4 h-4'} // Hide if error
                   />
-                )} */}
+                )}
               </div>
               <input
-                className="w-full mb-4 outline-none bg-transparent text-base"
+                className="w-full mb-0 outline-none bg-transparent text-[14px]"
                 value={website.description}
                 onChange={(e) => updateDraft(e, index, "description")}
                 name={`description-${index.toString()}`}
               />
               <div className="flex items-center gap-2 mt-2 justify-between">
                 <input
-                  className="w-full border border-slate-200 p-1 rounded-md outline-none bg-transparent text-base"
+                  className="w-full focus:border-slate-300 border border-slate-200 p-1 rounded-md outline-none bg-transparent text-[14px]"
                   value={website.url}
                   id={`url-${index.toString()}`}
                   placeholder="Keyword, URL or regex"
@@ -150,27 +149,27 @@ const Options = () => {
                   name={`url-${index.toString()}`}
                   required
                 />
-                <span
-                  className="text-slate-500 opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
-                  onClick={() => {
-                    enableAnimation(false);
-                    setStatus("unsaved");
-                    setWebsites((draftWebsites) => {
-                      draftWebsites.splice(index, 1);
-                    });
-                  }}
-                >
-                  <FaTrashCan />
-                </span>
               </div>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 mt-1">
                 Visited {website.visits} times
               </p>
+              <span
+                className="absolute right-3 bottom-3 text-slate-500 opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+                onClick={() => {
+                  enableAnimation(false);
+                  setStatus("unsaved");
+                  setWebsites((draftWebsites) => {
+                    draftWebsites.splice(index, 1);
+                  });
+                }}
+              >
+                <FaTrashCan />
+              </span>
             </div>
           ))}
           <button
             type="button"
-            className="shadow-lg min-h-[160px] border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors h-full"
+            className="shadow-lg min-h-[150px] border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors h-full"
             onClick={() => {
               enableAnimation(true);
               setWebsites([
