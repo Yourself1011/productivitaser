@@ -69,9 +69,9 @@ const Options = () => {
 
   return (
     <div className="p-16">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl mb-4">Blocked Websites</h1>
-        <div className="relative">
+      <div className="flex justify-between items-center flex-col md:flex-row mb-4">
+        <h1 className="text-3xl">Blocked Websites</h1>
+        <div className='flex items-center gap-4'>
           <span className={`text-base bg-[#fcfcfc] transition-colors duration-300
             ${status === "none" && "text-slate-700"}
             ${status === "saving" && "text-yellow-700"}
@@ -92,26 +92,28 @@ const Options = () => {
             )}
             {' •'}
           </span>
-          <input
-            placeholder="Search..."
-            className="py-2 px-2 ml-4 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base"
-            value={searchString}
-            name={`search`}
-            onFocus={() => enableAnimation(false)}
-            onBlur={() => enableAnimation(true)}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              setSearchString(e.target.value);
-            }}
-          ></input>
-          <div className="absolute right-2 top-3">
-            <IoMdSearch size={20} />
-          </div>
+          <div className='relative'>
+            <input
+              placeholder="Search..."
+              className="py-2 px-2 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base w-full pl-8"
+              value={searchString}
+              name={`search`}
+              onFocus={() => enableAnimation(false)}
+              onBlur={() => enableAnimation(true)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                setSearchString(e.target.value);
+              }}
+            ></input>
+            <div className="absolute left-2 top-[11px]">
+              <IoMdSearch size={20} />
+            </div>
+        </div>
         </div>
       </div>
 
       <form onSubmit={save}>
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
           ref={websitesAnimationElement}
         >
           {search(websites).map((website: website, index: number) => (
@@ -127,8 +129,8 @@ const Options = () => {
                 {/* {website.url.length > 0 && (
                   <img
                     src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website.url}`}
-                    onError={(e) => e.preventDefault()}
-                    className="w-4 h-4"
+                    onError={() => setHasError(true)} // Set an 'hasError' state
+                    className={hasError ? 'hidden' : 'w-4 h-4'} // Hide if error
                   />
                 )} */}
               </div>
