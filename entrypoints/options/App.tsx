@@ -2,7 +2,6 @@ import { useState, useEffect, ChangeEvent } from "react";
 import { storage } from "wxt/storage";
 import { useImmer } from "use-immer";
 import Fuse from "fuse.js";
-import { LuPencil } from "react-icons/lu";
 import { FaTrashCan } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -76,9 +75,9 @@ export default function () {
       </div>
 
       <form onSubmit={save}>
-        <div className="grid grid-cols-3 gap-8" ref={websitesAnimationElement}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" ref={websitesAnimationElement}>
           {search(websites).map((website: website, index: number) => (
-            <div className="shadow-lg border border-slate-100 bg-white p-4 rounded-2xl">
+            <div className="shadow-lg !h-full border border-slate-100 bg-white p-4 rounded-2xl">
               <div className="flex items-center justify-between gap-2">
                 <input
                   className="text-xl font-bold w-full outline-none bg-transparent"
@@ -107,7 +106,7 @@ export default function () {
                 )}
               </div>
               <input
-                className="w-full mb-4 outline-none bg-transparent"
+                className="w-full mb-4 outline-none bg-transparent text-base"
                 value={website.description}
                 onChange={(e) => {
                   setWebsites((draftWebsites) => {
@@ -121,36 +120,27 @@ export default function () {
                   );
                 }}
               />
-              <input
-                className="w-full border border-slate-100 p-1 rounded-md outline-none bg-transparent"
-                value={website.url}
-                id={`url-${index.toString()}`}
-                placeholder="Keyword, URL or regex"
-                onChange={(e) => {
-                  setWebsites((draftWebsites) => {
-                    draftWebsites[index] = {
-                      ...draftWebsites[index],
-                      url: e.target.value,
-                    };
-                  });
-                  setStatus(
-                    <span className="text-yellow-500">• Unsaved Changes</span>,
-                  );
-                }}
-                required
-              />
-              <p>Visited {website.visits} times</p>
-              <div className="flex items-center gap-2 mt-4">
-                <button
-                  className="w-1/2 flex items-center justify-center gap-2"
-                  onClick={() => {
-                    document.getElementById(`url-${index.toString()}`)?.focus();
+              <div className="flex items-center gap-2 mt-2 justify-between">
+                <input
+                  className="w-full border border-slate-200 p-1 rounded-md outline-none bg-transparent text-base"
+                  value={website.url}
+                  id={`url-${index.toString()}`}
+                  placeholder="Keyword, URL or regex"
+                  onChange={(e) => {
+                    setWebsites((draftWebsites) => {
+                      draftWebsites[index] = {
+                        ...draftWebsites[index],
+                        url: e.target.value,
+                      };
+                    });
+                    setStatus(
+                      <span className="text-yellow-500">• Unsaved Changes</span>,
+                    );
                   }}
-                >
-                  <LuPencil /> Edit
-                </button>
-                <button
-                  className="w-1/2 contrast flex items-center justify-center gap-2"
+                  required
+                />
+                <span
+                  className="text-slate-500 opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
                   onClick={() => {
                     enable(false);
                     setStatus(
@@ -163,14 +153,15 @@ export default function () {
                     });
                   }}
                 >
-                  <FaTrashCan /> Delete
-                </button>
+                  <FaTrashCan />
+                </span>
               </div>
+              <p className="text-xs text-slate-500">Visited {website.visits} times</p>
             </div>
           ))}
           <button
             type="button"
-            className="shadow-lg h-[193px] border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors"
+            className="shadow-lg min-h-[160px] border border-slate-100 bg-white p-4 rounded-2xl text-black text-xl hover:bg-neutral-50 transition-colors h-full"
             onClick={() => {
               enable(true);
               setWebsites([
@@ -194,7 +185,7 @@ export default function () {
         <div className="flex items-center gap-2 mt-4">
           <button
             type="submit"
-            className="contrast flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2"
           >
             <FaCheck /> Save
           </button>
@@ -203,29 +194,29 @@ export default function () {
 
       <div>
         <h1 className="mt-8 text-2xl">Serial</h1>
-        <p className="text-base">
+        <p>
           {serial ? (
             <>Connected!</>
           ) : (<>No serial connected, yet.</>)}
-          <button
-            className="flex bg-[#64748b] opacity-100 items-center justify-center gap-2 mt-4"
-            onClick={async () => {
-              const port = await navigator.serial.requestPort();
-
-              await port.open({ baudRate: 9600 });
-              console.log(JSON.stringify(port, function(key, value) { return value === undefined ? "undefined" : value }))
-              setSerial(true);
-              
-              const writer = port.writable?.getWriter();
-              
-              await writer?.write(new Uint8Array([1]));
-              writer?.releaseLock();
-            }}
-          >
-            <AiOutlineNodeIndex /> Connect
-          </button>
         </p>
       </div>
+      <button 
+        className="flex contrast items-center justify-center gap-2 mt-4"
+        onClick={async () => {
+          const port = await navigator.serial.requestPort();
+
+          await port.open({ baudRate: 9600 });
+          console.log(JSON.stringify(port, function(key, value) { return value === undefined ? "undefined" : value }))
+          setSerial(true);
+          
+          const writer = port.writable?.getWriter();
+          
+          await writer?.write(new Uint8Array([1]));
+          writer?.releaseLock();
+        }}
+      >
+        <AiOutlineNodeIndex /> Connect
+      </button>
 
       <div className='absolute bottom-0 border-t border-t-neutral-200 bg-white left-0 w-full flex justify-between p-6 text-base'>
         <p className='flex gap-2 items-center'>Copyright &#169; 2024</p>
