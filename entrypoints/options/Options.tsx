@@ -96,6 +96,7 @@ const Options = () => {
             placeholder="Search..."
             className="py-2 px-2 ml-4 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base"
             value={searchString}
+            name={`search`}
             onFocus={() => enableAnimation(false)}
             onBlur={() => enableAnimation(true)}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -114,26 +115,28 @@ const Options = () => {
           ref={websitesAnimationElement}
         >
           {search(websites).map((website: website, index: number) => (
-            <div className="shadow-lg !h-full border border-slate-100 bg-white p-4 rounded-2xl">
+            <div className="shadow-lg !h-full border border-slate-100 bg-white p-4 rounded-2xl" key={`options-website-${index}`}>
               <div className="flex items-center justify-between gap-2">
                 <input
                   className="text-xl font-bold w-full outline-none bg-transparent"
                   value={website.name}
                   key={`input-${index.toString()}`}
                   onChange={(e) => updateDraft(e, index, "name")}
+                  name={`name-${index.toString()}`}
                 />
-                {website.url.length > 0 && (
+                {/* {website.url.length > 0 && (
                   <img
                     src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website.url}`}
                     onError={(e) => e.preventDefault()}
                     className="w-4 h-4"
                   />
-                )}
+                )} */}
               </div>
               <input
                 className="w-full mb-4 outline-none bg-transparent text-base"
                 value={website.description}
                 onChange={(e) => updateDraft(e, index, "description")}
+                name={`description-${index.toString()}`}
               />
               <div className="flex items-center gap-2 mt-2 justify-between">
                 <input
@@ -142,6 +145,7 @@ const Options = () => {
                   id={`url-${index.toString()}`}
                   placeholder="Keyword, URL or regex"
                   onChange={(e) => updateDraft(e, index, "url")}
+                  name={`url-${index.toString()}`}
                   required
                 />
                 <span
