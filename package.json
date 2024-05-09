@@ -2,7 +2,7 @@
   "name": "Productivitazer",
   "description": "H̶e̶l̶p̶i̶n̶g̶ Forcing you to break your bad habits",
   "private": true,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "scripts": {
     "dev": "wxt",
