@@ -126,12 +126,12 @@ const Options = () => {
                   onChange={(e) => updateDraft(e, index, "name")}
                   name={`name-${index.toString()}`}
                 />
-                {website.url.length > 0 && (
+                {/* {website.url.length > 0 && (
                   <img
                     src={`https://s2.googleusercontent.com/s2/favicons?domain_url=${website.url}`}
                     className={'w-4 h-4'} // Hide if error
                   />
-                )}
+                )} */}
               </div>
               <input
                 className="w-full mb-0 outline-none bg-transparent text-[14px]"
