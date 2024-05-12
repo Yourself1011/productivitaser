@@ -50,7 +50,7 @@ export default function () {
         </p>
       )}
       <p>
-        You almost just wasted {Math.floor(Math.random() * 59)} minutes.
+        You almost just wasted {Math.floor(Math.random() * 59) + 1} minutes.
       </p>
       <p>Hop off, because it isn't too late.</p>
       <button
