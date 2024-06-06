@@ -153,7 +153,7 @@ const Options = () => {
               <p className="text-xs text-slate-500 mt-1">
                 Visited {website.visits} times
               </p>
-              <span
+              {/* <span
                 className="absolute right-3 bottom-3 text-slate-500 opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
                 onClick={() => {
                   enableAnimation(false);
@@ -164,7 +164,7 @@ const Options = () => {
                 }}
               >
                 <FaTrashCan />
-              </span>
+              </span> */}
             </div>
           ))}
           <button
