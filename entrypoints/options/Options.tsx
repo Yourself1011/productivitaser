@@ -20,6 +20,8 @@ const Options = () => {
     "none",
   );
   const [serial, setSerial] = useState<boolean>(false);
+  const [standUpEnabled, setStandUpEnabled] = useState<boolean>(false);
+  const [standUpInterval, setStandUpInterval] = useState<number>(0);
 
   const [websitesAnimationElement, enableAnimation] = useAutoAnimate();
 
@@ -37,9 +39,22 @@ const Options = () => {
     return results.map((results) => results.item);
   }
 
-  async function save(e: React.FormEvent<HTMLFormElement>) {
+  async function saveSites(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await storage.setItem("local:websites", websites);
+    setStatus("saved");
+  }
+
+  async function toggleEnableStandup() {
+    setStandUpEnabled(!standUpEnabled);
+    await storage.setItem("local:standupEnabled", standUpEnabled);
+
+    setStatus("saved");
+  }
+
+  async function saveStandup(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    await storage.setItem("local:standupInterval", standUpInterval);
     setStatus("saved");
   }
 
@@ -64,6 +79,18 @@ const Options = () => {
       )) as website[];
       if (fetchedWebsites) setWebsites(fetchedWebsites);
       else setWebsites([]);
+
+      const fetchedStandupEnabled = (await storage.getItem(
+        "local:standupEnabled",
+      )) as boolean;
+      if (fetchedStandupEnabled) setStandUpEnabled(fetchedStandupEnabled);
+      else setStandUpEnabled(false);
+
+      const fetchedStandupInterval = (await storage.getItem(
+        "local:standupInterval",
+      )) as number;
+      if (fetchedStandupInterval) setStandUpInterval(fetchedStandupInterval);
+      else setStandUpInterval(0);
     })();
   }, []);
 
@@ -110,7 +137,7 @@ const Options = () => {
         </div>
       </div>
 
-      <form onSubmit={save}>
+      <form onSubmit={saveSites}>
         <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
           ref={websitesAnimationElement}
@@ -199,6 +226,43 @@ const Options = () => {
           </button>
         </div>
       </form>
+
+      <div>
+        <h1 className="text-3xl mt-8">Stand Up Reminder</h1>
+        <p>Reduce change of obesity by reminding yourself to stand up</p>
+        <p className="mt-4 text-sm">
+          Stand up reminder is currently:{" "}
+          {standUpEnabled ? "Enabled" : "Disabled"}
+          <br />
+          {standUpEnabled && (
+            <span>
+              {" "}
+              You will be reminded to stand up every {standUpInterval} minutes
+            </span>
+          )}
+        </p>
+        <button onClick={toggleEnableStandup} className="mt-4">
+          {standUpEnabled ? "Disable" : "Enable"} stand up reminder
+        </button>
+        {standUpEnabled && (
+          <form className="mt-4" onSubmit={saveStandup}>
+            <label className="text-base mr-2">Change interval</label>
+            <input
+              type="number"
+              className="focus:border-slate-300 border border-slate-200 p-1 rounded-md outline-none text-[14px]"
+              value={standUpInterval}
+              onChange={(e) => {
+                setStatus("unsaved");
+                setStandUpInterval(parseInt(e.target.value));
+              }}
+              required
+            />
+            <button type="submit" className="ml-2">
+              Save
+            </button>
+          </form>
+        )}
+      </div>
 
       <div>
         <h1 className="mt-8 text-2xl">Serial</h1>

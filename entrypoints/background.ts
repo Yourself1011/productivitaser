@@ -3,9 +3,22 @@ import { browser } from "wxt/browser";
 import { website } from "./types";
 
 export default defineBackground(() => {
-  setInterval(async function () {
+  browser.windows.onCreated.addListener(async function () {
     console.log("obese");
-  }, 1000);
+    if (await storage.getItem("local:standUpEnabled")) {
+      const interval = (await storage.getItem("local:standUpInterval")) / 60000;
+      setInterval(
+        async () =>
+          await browser.windows.create({
+            url: "/standup.html",
+            type: "popup",
+            width: 400,
+            height: 400,
+          }),
+        interval,
+      );
+    }
+  });
 
   browser.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
     if (changeInfo.status == "complete") {

@@ -30,7 +30,7 @@ const standup = [
 
 export default function () {
   return (
-    <div className="flex items-center justify-center flex-col w-screen h-screen gap-4 text-lg standup">
+    <div className="flex items-center justify-center flex-col w-screen h-screen gap-4 text-lg shake">
       <img src={movables[Math.floor(Math.random() * movables.length)]}></img>
       <p className="text-3xl">❌</p>
       <h1 className="text-2xl">Stand up bub</h1>
