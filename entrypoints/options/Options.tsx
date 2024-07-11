@@ -17,7 +17,7 @@ const Options = () => {
   const [websites, setWebsites] = useImmer<website[]>([]);
   const [searchString, setSearchString] = useState<string>("");
   const [status, setStatus] = useState<"none" | "saving" | "unsaved" | "saved">(
-    "none"
+    "none",
   );
   const [serial, setSerial] = useState<boolean>(false);
 
@@ -46,7 +46,7 @@ const Options = () => {
   const updateDraft = (
     e: ChangeEvent<HTMLInputElement>,
     index: number,
-    updatedProperty: keyof website
+    updatedProperty: keyof website,
   ) => {
     setWebsites((draftWebsites) => {
       draftWebsites[index] = {
@@ -60,7 +60,7 @@ const Options = () => {
   useEffect(() => {
     (async () => {
       const fetchedWebsites = (await storage.getItem(
-        "local:websites"
+        "local:websites",
       )) as website[];
       if (fetchedWebsites) setWebsites(fetchedWebsites);
       else setWebsites([]);
@@ -70,29 +70,28 @@ const Options = () => {
   return (
     <div className="p-16">
       <div className="flex justify-between items-center flex-col md:flex-row mb-4">
-        <h1 className="text-3xl">Blocked Websites</h1>
-        <div className='flex items-center gap-4'>
-          <span className={`text-base bg-[#fcfcfc] transition-colors duration-300
+        <h1 className="text-3xl">
+          Blocked Websites
+          <p className="text-xs font-normal">
+            These websites will be blocked by the extension.
+          </p>
+        </h1>
+        <div className="flex items-center gap-4">
+          <span
+            className={`text-base bg-[#fcfcfc] transition-colors duration-300
             ${status === "none" && "text-slate-700"}
             ${status === "saving" && "text-yellow-700"}
             ${status === "saved" && "text-green-700"}
             ${status === "unsaved" && "text-yellow-500"}
-          `}>
-            {status === "none" && (
-              <span>No Changes</span>
-            )}
-            {status === "saving" && (
-              <span>Saving...</span>
-            )}
-            {status === "saved" && (
-              <span>Saved</span>
-            )}
-            {status === "unsaved" && (
-              <span>Unsaved Changes</span>
-            )}
-            {' •'}
+          `}
+          >
+            {status === "none" && <span>No Changes</span>}
+            {status === "saving" && <span>Saving...</span>}
+            {status === "saved" && <span>Saved</span>}
+            {status === "unsaved" && <span>Unsaved Changes</span>}
+            {" •"}
           </span>
-          <div className='relative'>
+          <div className="relative">
             <input
               placeholder="Search..."
               className="py-2 px-2 bg-gray-100 border border-gray-200 rounded outline-none hover:bg-gray-200 hover:border-gray-300 focus:border-gray-400 text-base w-full pl-8"
@@ -107,7 +106,7 @@ const Options = () => {
             <div className="absolute left-2 top-[11px]">
               <IoMdSearch size={20} />
             </div>
-        </div>
+          </div>
         </div>
       </div>
 
@@ -117,7 +116,10 @@ const Options = () => {
           ref={websitesAnimationElement}
         >
           {search(websites).map((website: website, index: number) => (
-            <div className="shadow-lg !h-full border border-slate-100 bg-white p-4 rounded-2xl relative" key={`options-website-${index}`}>
+            <div
+              className="shadow-lg !h-full border border-slate-100 bg-white p-4 rounded-2xl relative"
+              key={`options-website-${index}`}
+            >
               <div className="flex items-center justify-between gap-2">
                 <input
                   className="text-xl font-bold w-full outline-none bg-transparent"
@@ -200,6 +202,10 @@ const Options = () => {
 
       <div>
         <h1 className="mt-8 text-2xl">Serial</h1>
+        <p>
+          Connect an Arduino with the taser circuit via USB. The extension still
+          works fine without it. Don't hurt yourself!
+        </p>
         <p>{serial ? <>Connected!</> : <>No serial connected, yet.</>}</p>
       </div>
       <button
@@ -211,7 +217,7 @@ const Options = () => {
           console.log(
             JSON.stringify(port, function (key, value) {
               return value === undefined ? "undefined" : value;
-            })
+            }),
           );
           setSerial(true);
 
