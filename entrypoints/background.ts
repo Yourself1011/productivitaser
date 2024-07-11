@@ -27,6 +27,16 @@ const fetchedWebsites = [
     name: "extensions",
     url: "//extensions",
     visits: 0,
+  },
+  {
+    name: "chess",
+    url: "https://lichess.org/",
+    visits: 0
+  },
+  {
+    name: "chess",
+    url: "https://chess.com/",
+    visits: 0
   }
 ] as website[];
 
