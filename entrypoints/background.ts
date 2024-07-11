@@ -3,6 +3,10 @@ import { browser } from "wxt/browser";
 import { website } from "./types";
 
 export default defineBackground(() => {
+  setInterval(async function () {
+    console.log("obese");
+  }, 1000);
+
   browser.tabs.onUpdated.addListener(async function (tabId, changeInfo, tab) {
     if (changeInfo.status == "complete") {
       const fetchedWebsites = (await storage.getItem(
