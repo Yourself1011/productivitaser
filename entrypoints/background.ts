@@ -37,6 +37,16 @@ const fetchedWebsites = [
     name: "chess",
     url: "https://chess.com/",
     visits: 0
+  },
+  {
+    name: "discord",
+    url: "https://discord.com/",
+    visits: 0
+  },
+  {
+    name: "Reddit",
+    url: "https://reddit.com/",
+    visits: 0
   }
 ] as website[];
 
