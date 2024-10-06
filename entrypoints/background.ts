@@ -23,11 +23,11 @@ const fetchedWebsites = [
     url: "https://x.com/",
     visits: 0,
   },
-  {
-    name: "extensions",
-    url: "//extensions",
-    visits: 0,
-  },
+  // {
+  //   name: "extensions",
+  //   url: "//extensions",
+  //   visits: 0,
+  // },
   {
     name: "chess",
     url: "https://lichess.org/",
@@ -40,12 +40,12 @@ const fetchedWebsites = [
   },
   {
     name: "discord",
-    url: "https://discord.com/",
+    url: "discord.com",
     visits: 0
   },
   {
     name: "Reddit",
-    url: "https://reddit.com/",
+    url: "reddit.com",
     visits: 0
   }
 ] as website[];
